@@ -1,0 +1,129 @@
+jenkins@Jenkins:~$ kubectl get all -n helm-deployment
+NAME                                 READY   STATUS    RESTARTS   AGE
+pod/first-mychart-6d59d988fc-t5cnk   1/1     Running   0          118s
+
+NAME                    TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)        AGE
+service/first-mychart   LoadBalancer   10.0.157.225   4.209.111.230   80:32057/TCP   9h
+
+NAME                            READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/first-mychart   1/1     1            1           9h
+
+NAME                                       DESIRED   CURRENT   READY   AGE
+replicaset.apps/first-mychart-54c55ff76    0         0         0       9h
+replicaset.apps/first-mychart-586c9c89cf   0         0         0       8h
+replicaset.apps/first-mychart-59dccc4f85   0         0         0       8h
+replicaset.apps/first-mychart-5cb965884    0         0         0       58m
+replicaset.apps/first-mychart-6d59d988fc   1         1         1       119s
+replicaset.apps/first-mychart-775f687584   0         0         0       8h
+replicaset.apps/first-mychart-d6c56845     0         0         0       45m
+
+jenkins@Jenkins:~$ kubectl get pods -n helm-deployment
+NAME                             READY   STATUS    RESTARTS   AGE
+first-mychart-6d59d988fc-t5cnk   1/1     Running   0          2m9s
+
+jenkins@Jenkins:~$ kubectl describe pod first-mychart-6d59d988fc-t5cnk -n helm-deployment
+Name:             first-mychart-6d59d988fc-t5cnk
+Namespace:        helm-deployment
+Priority:         0
+Service Account:  first-mychart
+Node:             aks-nodepool1-16588175-vmss000004/10.224.0.4
+Start Time:       Wed, 25 Nov 2026 21:34:30 +0000
+Labels:           app.kubernetes.io/instance=first
+                  app.kubernetes.io/managed-by=Helm
+                  app.kubernetes.io/name=mychart
+                  app.kubernetes.io/version=1.16.0
+                  helm.sh/chart=mychart-0.1.0
+                  pod-template-hash=6d59d988fc
+                  topology.kubernetes.io/region=northeurope
+                  topology.kubernetes.io/zone=0
+Annotations:      <none>
+Status:           Running
+IP:               10.244.0.37
+IPs:
+  IP:           10.244.0.37
+Controlled By:  ReplicaSet/first-mychart-6d59d988fc
+Containers:
+  mychart:
+    Container ID:   containerd://64b63cf3cfc6e4b7f1ffb59c08cffea00e645445b13694f021ff1559d3e5a501
+    Image:          myacrrepo5312.azurecr.io/myacrrepo5312:10
+    Image ID:       myacrrepo5312.azurecr.io/myacrrepo5312@sha256:ee645b9dec8d00db009a27b6c858bb8a7af84fd105930773c0e53132800b3928
+    Port:           8080/TCP (http)
+    Host Port:      0/TCP (http)
+    State:          Running
+      Started:      Wed, 25 Nov 2026 21:34:32 +0000
+    Ready:          True
+    Restart Count:  0
+    Liveness:       http-get http://:http/ delay=0s timeout=1s period=10s successThreshold=1 failureThreshold=3
+    Readiness:      http-get http://:http/ delay=0s timeout=1s period=10s successThreshold=1 failureThreshold=3
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-sb28c (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True
+  Initialized                 True
+  Ready                       True
+  ContainersReady             True
+  PodScheduled                True
+Volumes:
+  kube-api-access-sb28c:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason     Age                    From               Message
+  ----     ------     ----                   ----               -------
+  Normal   Scheduled  2m40s                  default-scheduler  Successfully assigned helm-deployment/first-mychart-6d59d988fc-t5cnk to aks-nodepool1-16588175-vmss000004
+  Normal   Pulling    2m39s                  kubelet            spec.containers{mychart}: Pulling image "myacrrepo5312.azurecr.io/myacrrepo5312:10"
+  Normal   Pulled     2m38s                  kubelet            spec.containers{mychart}: Successfully pulled image "myacrrepo5312.azurecr.io/myacrrepo5312:10" in 780ms (781ms including waiting). Image size: 70727422 bytes.
+  Normal   Created    2m38s                  kubelet            spec.containers{mychart}: Container created
+  Normal   Started    2m38s                  kubelet            spec.containers{mychart}: Container started
+  Warning  Unhealthy  2m37s (x3 over 2m38s)  kubelet            spec.containers{mychart}: Readiness probe failed: Get "http://10.244.0.37:8080/": dial tcp 10.244.0.37:8080: connect: connection refused
+
+jenkins@Jenkins:~$ kubectl logs first-mychart-6d59d988fc-t5cnk -n helm-deployment
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v2.2.4.RELEASE)
+
+2026-11-25 21:34:34.084  INFO 1 --- [           main] com.devops.coach.StartApplication        : Starting StartApplication v1.0 on first-mychart-6d59d988fc-t5cnk with PID 1 (/opt/app/spring-boot-web.jar started by root in /opt/app)
+2026-11-25 21:34:34.093  INFO 1 --- [           main] com.devops.coach.StartApplication        : No active profile set, falling back to default profiles: default
+2026-11-25 21:34:35.642  INFO 1 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2026-11-25 21:34:35.656  INFO 1 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-11-25 21:34:35.658  INFO 1 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.30]
+2026-11-25 21:34:35.729  INFO 1 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-11-25 21:34:35.730  INFO 1 --- [           main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1483 ms
+2026-11-25 21:34:36.005  INFO 1 --- [           main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2026-11-25 21:34:36.102  INFO 1 --- [           main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2026-11-25 21:34:36.283  INFO 1 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2026-11-25 21:34:36.295  INFO 1 --- [           main] com.devops.coach.StartApplication        : Started StartApplication in 3.244 seconds (JVM running for 3.978)
+2026-11-25 21:34:41.195  INFO 1 --- [nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-25 21:34:41.196  INFO 1 --- [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-11-25 21:34:41.203  INFO 1 --- [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 7 ms
+
+jenkins@Jenkins:~$ helm status first -n helm-deployment
+NAME: first
+LAST DEPLOYED: Wed Nov 25 21:34:28 2026
+NAMESPACE: helm-deployment
+STATUS: deployed
+REVISION: 7
+NOTES:
+1. Get the application URL by running these commands:
+     NOTE: It may take a few minutes for the LoadBalancer IP to be available.
+           You can watch its status by running 'kubectl get --namespace helm-deployment svc -w first-mychart'
+  export SERVICE_IP=$(kubectl get svc --namespace helm-deployment first-mychart --template "{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}")
+  echo http://$SERVICE_IP:80
+
+jenkins@Jenkins:~$ kubectl get svc -n helm-deployment
+NAME            TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)        AGE
+first-mychart   LoadBalancer   10.0.157.225   4.209.111.230   80:32057/TCP   9h
