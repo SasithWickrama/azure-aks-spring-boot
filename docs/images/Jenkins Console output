@@ -1,0 +1,295 @@
+Started by user Sasith Wickramasinghe
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/lib/jenkins/workspace/myHelmDeployJob
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Checkout)
+[Pipeline] checkout
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/lib/jenkins/workspace/myHelmDeployJob/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/SasithWickrama/azure-aks-spring-boot # timeout=10
+Fetching upstream changes from https://github.com/SasithWickrama/azure-aks-spring-boot
+ > git --version # timeout=10
+ > git --version # 'git version 2.43.0'
+ > git fetch --tags --force --progress -- https://github.com/SasithWickrama/azure-aks-spring-boot +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision b17f39ff4c804964ad447f5cc1c0664f453638b5 (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f b17f39ff4c804964ad447f5cc1c0664f453638b5 # timeout=10
+Commit message: "Edit Spring Boot application with Docker, Helm, Jenkins and AKS deployment files 4"
+ > git rev-list --no-walk aa4f51f4a841d6ce40498e9b5feebc4cd257d638 # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build JAR)
+[Pipeline] sh
++ mvn clean install
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m----------------< [0;36mcom.devops.coach:docker-spring-boot[0;1m >-----------------[m
+[[1;34mINFO[m] [1mBuilding docker-spring-boot 1.0[m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-clean-plugin:3.1.0:clean[m [1m(default-clean)[m @ [36mdocker-spring-boot[0;1m ---[m
+[[1;34mINFO[m] Deleting /var/lib/jenkins/workspace/myHelmDeployJob/target
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:resources[m [1m(default-resources)[m @ [36mdocker-spring-boot[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] Copying 1 resource
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:compile[m [1m(default-compile)[m @ [36mdocker-spring-boot[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 1 source file to /var/lib/jenkins/workspace/myHelmDeployJob/target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:testResources[m [1m(default-testResources)[m @ [36mdocker-spring-boot[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /var/lib/jenkins/workspace/myHelmDeployJob/src/test/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:testCompile[m [1m(default-testCompile)[m @ [36mdocker-spring-boot[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 1 source file to /var/lib/jenkins/workspace/myHelmDeployJob/target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:2.22.2:test[m [1m(default-test)[m @ [36mdocker-spring-boot[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] -------------------------------------------------------
+[[1;34mINFO[m]  T E S T S
+[[1;34mINFO[m] -------------------------------------------------------
+[[1;34mINFO[m] Running com.devops.coach.[1mStartApplicationTest[m
+20:50:24.774 [main] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating CacheAwareContextLoaderDelegate from class [org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate]
+20:50:24.784 [main] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating BootstrapContext using constructor [public org.springframework.test.context.support.DefaultBootstrapContext(java.lang.Class,org.springframework.test.context.CacheAwareContextLoaderDelegate)]
+20:50:24.815 [main] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [com.devops.coach.StartApplicationTest] from class [org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTestContextBootstrapper]
+20:50:24.827 [main] INFO org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.devops.coach.StartApplicationTest], using SpringBootContextLoader
+20:50:24.831 [main] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [com.devops.coach.StartApplicationTest]: class path resource [com/devops/coach/StartApplicationTest-context.xml] does not exist
+20:50:24.833 [main] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [com.devops.coach.StartApplicationTest]: class path resource [com/devops/coach/StartApplicationTestContext.groovy] does not exist
+20:50:24.833 [main] INFO org.springframework.test.context.support.AbstractContextLoader - Could not detect default resource locations for test class [com.devops.coach.StartApplicationTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+20:50:24.833 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.devops.coach.StartApplicationTest]: StartApplicationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+20:50:24.884 [main] DEBUG org.springframework.test.context.support.ActiveProfilesUtils - Could not find an 'annotation declaring class' for annotation type [org.springframework.test.context.ActiveProfiles] and class [com.devops.coach.StartApplicationTest]
+20:50:24.931 [main] DEBUG org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider - Identified candidate component class: file [/var/lib/jenkins/workspace/myHelmDeployJob/target/classes/com/devops/coach/StartApplication.class]
+20:50:24.931 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.devops.coach.StartApplication for test class com.devops.coach.StartApplicationTest
+20:50:24.932 [main] DEBUG org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTestContextBootstrapper - @TestExecutionListeners is not present for class [com.devops.coach.StartApplicationTest]: using defaults.
+20:50:24.933 [main] INFO org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+20:50:24.940 [main] DEBUG org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTestContextBootstrapper - Skipping candidate TestExecutionListener [org.springframework.test.context.transaction.TransactionalTestExecutionListener] due to a missing dependency. Specify custom listener classes or make the default listener classes and their required dependencies available. Offending class: [org/springframework/transaction/interceptor/TransactionAttributeSource]
+20:50:24.941 [main] DEBUG org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTestContextBootstrapper - Skipping candidate TestExecutionListener [org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener] due to a missing dependency. Specify custom listener classes or make the default listener classes and their required dependencies available. Offending class: [org/springframework/transaction/interceptor/TransactionAttribute]
+20:50:24.941 [main] INFO org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@7139992f, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@69504ae9, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@387a8303, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@28cda624, org.springframework.test.context.support.DirtiesContextTestExecutionListener@1500b2f3, org.springframework.test.context.event.EventPublishingTestExecutionListener@7eecb5b8, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@126253fd, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@57db2b13, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@475c9c31, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@5c86a017, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@5c7bfdc1]
+20:50:24.944 [main] DEBUG org.springframework.test.context.support.AbstractDirtiesContextTestExecutionListener - Before test class: context [DefaultTestContext@2254127a testClass = StartApplicationTest, testInstance = [null], testMethod = [null], testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@51891008 testClass = StartApplicationTest, locations = '{}', classes = '{class com.devops.coach.StartApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTestContextBootstrapper=true}', contextCustomizers = set[[ImportsContextCustomizer@2f953efd key = [org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration, org.springframework.boot.autoconfigure.context.MessageSourceAutoConfiguration, org.springframework.boot.autoconfigure.data.web.SpringDataWebAutoConfiguration, org.springframework.boot.autoconfigure.freemarker.FreeMarkerAutoConfiguration, org.springframework.boot.autoconfigure.groovy.template.GroovyTemplateAutoConfiguration, org.springframework.boot.autoconfigure.gson.GsonAutoConfiguration, org.springframework.boot.autoconfigure.hateoas.HypermediaAutoConfiguration, org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration, org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration, org.springframework.boot.autoconfigure.jsonb.JsonbAutoConfiguration, org.springframework.boot.autoconfigure.mustache.MustacheAutoConfiguration, org.springframework.boot.autoconfigure.task.TaskExecutionAutoConfiguration, org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration, org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration, org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration, org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWebClientAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWebDriverAutoConfiguration, org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration, org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcSecurityConfiguration]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@73700b80, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@4d5b6aac, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.autoconfigure.OverrideAutoConfigurationContextCustomizerFactory$DisableAutoConfigurationContextCustomizer@16610890, org.springframework.boot.test.autoconfigure.filter.TypeExcludeFiltersContextCustomizer@c99b80e6, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@46e66b18, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@51e69659], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map[[empty]]], class annotated with @DirtiesContext [false] with mode [null].
+20:50:24.952 [main] DEBUG org.springframework.test.context.support.DependencyInjectionTestExecutionListener - Performing dependency injection for test context [[DefaultTestContext@2254127a testClass = StartApplicationTest, testInstance = com.devops.coach.StartApplicationTest@20bd8be5, testMethod = [null], testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@51891008 testClass = StartApplicationTest, locations = '{}', classes = '{class com.devops.coach.StartApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTestContextBootstrapper=true}', contextCustomizers = set[[ImportsContextCustomizer@2f953efd key = [org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration, org.springframework.boot.autoconfigure.context.MessageSourceAutoConfiguration, org.springframework.boot.autoconfigure.data.web.SpringDataWebAutoConfiguration, org.springframework.boot.autoconfigure.freemarker.FreeMarkerAutoConfiguration, org.springframework.boot.autoconfigure.groovy.template.GroovyTemplateAutoConfiguration, org.springframework.boot.autoconfigure.gson.GsonAutoConfiguration, org.springframework.boot.autoconfigure.hateoas.HypermediaAutoConfiguration, org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration, org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration, org.springframework.boot.autoconfigure.jsonb.JsonbAutoConfiguration, org.springframework.boot.autoconfigure.mustache.MustacheAutoConfiguration, org.springframework.boot.autoconfigure.task.TaskExecutionAutoConfiguration, org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration, org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration, org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration, org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWebClientAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWebDriverAutoConfiguration, org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration, org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcSecurityConfiguration]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@73700b80, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@4d5b6aac, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.autoconfigure.OverrideAutoConfigurationContextCustomizerFactory$DisableAutoConfigurationContextCustomizer@16610890, org.springframework.boot.test.autoconfigure.filter.TypeExcludeFiltersContextCustomizer@c99b80e6, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@46e66b18, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@51e69659], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map[[empty]]]].
+20:50:25.032 [main] DEBUG org.springframework.test.context.support.TestPropertySourceUtils - Adding inlined properties to environment: {spring.jmx.enabled=false, org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTestContextBootstrapper=true, server.port=-1}
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v2.2.4.RELEASE)
+
+2026-11-25 20:50:25.409  INFO 18834 --- [           main] com.devops.coach.StartApplicationTest    : Starting StartApplicationTest on Jenkins with PID 18834 (started by jenkins in /var/lib/jenkins/workspace/myHelmDeployJob)
+2026-11-25 20:50:25.414  INFO 18834 --- [           main] com.devops.coach.StartApplicationTest    : No active profile set, falling back to default profiles: default
+2026-11-25 20:50:26.541  INFO 18834 --- [           main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2026-11-25 20:50:26.634  INFO 18834 --- [           main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2026-11-25 20:50:26.838  INFO 18834 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-11-25 20:50:26.838  INFO 18834 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-11-25 20:50:26.849  INFO 18834 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 10 ms
+2026-11-25 20:50:26.892  INFO 18834 --- [           main] com.devops.coach.StartApplicationTest    : Started StartApplicationTest in 1.851 seconds (JVM running for 2.751)
+[[1;34mINFO[m] [1;32mTests run: [0;1;32m1[m, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.846 s - in com.devops.coach.[1mStartApplicationTest[m
+2026-11-25 20:50:27.554  INFO 18834 --- [extShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+[[1;34mINFO[m] 
+[[1;34mINFO[m] Results:
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1;32mTests run: 1, Failures: 0, Errors: 0, Skipped: 0[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-jar-plugin:3.1.2:jar[m [1m(default-jar)[m @ [36mdocker-spring-boot[0;1m ---[m
+[[1;34mINFO[m] Building jar: /var/lib/jenkins/workspace/myHelmDeployJob/target/spring-boot-web.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspring-boot-maven-plugin:2.2.4.RELEASE:repackage[m [1m(repackage)[m @ [36mdocker-spring-boot[0;1m ---[m
+[[1;34mINFO[m] Replacing main artifact with repackaged archive
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-install-plugin:2.5.2:install[m [1m(default-install)[m @ [36mdocker-spring-boot[0;1m ---[m
+[[1;34mINFO[m] Installing /var/lib/jenkins/workspace/myHelmDeployJob/target/spring-boot-web.jar to /var/lib/jenkins/.m2/repository/com/devops/coach/docker-spring-boot/1.0/docker-spring-boot-1.0.jar
+[[1;34mINFO[m] Installing /var/lib/jenkins/workspace/myHelmDeployJob/pom.xml to /var/lib/jenkins/.m2/repository/com/devops/coach/docker-spring-boot/1.0/docker-spring-boot-1.0.pom
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;32mBUILD SUCCESS[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  7.495 s
+[[1;34mINFO[m] Finished at: 2026-11-25T20:50:28Z
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build Docker image)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] isUnix
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
++ docker build -t myacrrepo5312 .
+DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+            Install the buildx component to build images with BuildKit:
+            https://docs.docker.com/go/buildx/
+
+Sending build context to Docker daemon  19.38MB
+Step 1/5 : FROM adoptopenjdk/openjdk11:alpine-jre
+ ---> ed992fd62dc8
+Step 2/5 : ARG JAR_FILE=target/spring-boot-web.jar
+ ---> Using cache
+ ---> b70d41a83681
+Step 3/5 : WORKDIR /opt/app
+ ---> Using cache
+ ---> a9eada303af4
+Step 4/5 : COPY ${JAR_FILE} spring-boot-web.jar
+ ---> e854e35194c2
+Step 5/5 : ENTRYPOINT ["java","-jar","spring-boot-web.jar"]
+ ---> Running in 2c1f4f260dc8
+ ---> Removed intermediate container 2c1f4f260dc8
+ ---> 502fa77d14f7
+Successfully built 502fa77d14f7
+Successfully tagged myacrrepo5312:latest
+[Pipeline] }
+[Pipeline] // withEnv
+Did you forget the `def` keyword? WorkflowScript seems to be setting a field named dockerImage (to a value of type Image) which could lead to memory leaks or other issues.
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Upload Image to ACR)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withDockerRegistry
+$ docker login -u myacrrepo5312 -p ******** http://myacrrepo5312.azurecr.io
+WARNING! Using --password via the CLI is insecure. Use --password-stdin.
+
+WARNING! Your credentials are stored unencrypted in '/var/lib/jenkins/workspace/myHelmDeployJob@tmp/fbbaf504-7d38-4083-813f-5c3f8cdc97a0/config.json'.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/go/credential-store/
+
+Login Succeeded
+[Pipeline] {
+[Pipeline] isUnix
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
++ docker tag myacrrepo5312 myacrrepo5312.azurecr.io/myacrrepo5312:9
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] isUnix
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
++ docker push myacrrepo5312.azurecr.io/myacrrepo5312:9
+The push refers to repository [myacrrepo5312.azurecr.io/myacrrepo5312]
+1e8419fbeebf: Waiting
+f438117886ff: Waiting
+f7dab3ab2d6e: Waiting
+7f6dfe274254: Waiting
+cb88f280e714: Waiting
+f438117886ff: Waiting
+f7dab3ab2d6e: Waiting
+7f6dfe274254: Waiting
+cb88f280e714: Waiting
+1e8419fbeebf: Waiting
+f438117886ff: Waiting
+f7dab3ab2d6e: Waiting
+7f6dfe274254: Waiting
+cb88f280e714: Waiting
+1e8419fbeebf: Waiting
+f7dab3ab2d6e: Waiting
+7f6dfe274254: Waiting
+cb88f280e714: Waiting
+1e8419fbeebf: Waiting
+f438117886ff: Waiting
+f438117886ff: Waiting
+f7dab3ab2d6e: Waiting
+7f6dfe274254: Waiting
+cb88f280e714: Waiting
+1e8419fbeebf: Waiting
+1e8419fbeebf: Waiting
+f438117886ff: Waiting
+f7dab3ab2d6e: Waiting
+7f6dfe274254: Waiting
+cb88f280e714: Waiting
+1e8419fbeebf: Waiting
+f438117886ff: Waiting
+f7dab3ab2d6e: Waiting
+7f6dfe274254: Waiting
+cb88f280e714: Waiting
+f7dab3ab2d6e: Waiting
+7f6dfe274254: Waiting
+cb88f280e714: Waiting
+1e8419fbeebf: Waiting
+f438117886ff: Waiting
+1e8419fbeebf: Waiting
+f438117886ff: Waiting
+f7dab3ab2d6e: Waiting
+7f6dfe274254: Waiting
+cb88f280e714: Waiting
+1e8419fbeebf: Waiting
+f438117886ff: Waiting
+f7dab3ab2d6e: Waiting
+7f6dfe274254: Waiting
+cb88f280e714: Waiting
+f438117886ff: Layer already exists
+f7dab3ab2d6e: Waiting
+7f6dfe274254: Waiting
+cb88f280e714: Waiting
+1e8419fbeebf: Waiting
+cb88f280e714: Waiting
+1e8419fbeebf: Waiting
+f7dab3ab2d6e: Waiting
+7f6dfe274254: Waiting
+1e8419fbeebf: Waiting
+f7dab3ab2d6e: Layer already exists
+7f6dfe274254: Waiting
+cb88f280e714: Layer already exists
+1e8419fbeebf: Waiting
+7f6dfe274254: Layer already exists
+1e8419fbeebf: Pushed
+9: digest: sha256:502fa77d14f713eaf3d5498a2ec3742f127b92746d4b51ed6a769714c7f672a8 size: 1425
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withDockerRegistry
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Helm Deploy)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
++ helm upgrade first --install mychart --namespace helm-deployment --set image.tag=9
+Release "first" has been upgraded. Happy Helming!
+NAME: first
+LAST DEPLOYED: Wed Nov 25 20:50:40 2026
+NAMESPACE: helm-deployment
+STATUS: deployed
+REVISION: 6
+NOTES:
+1. Get the application URL by running these commands:
+     NOTE: It may take a few minutes for the LoadBalancer IP to be available.
+           You can watch its status by running 'kubectl get --namespace helm-deployment svc -w first-mychart'
+  export SERVICE_IP=$(kubectl get svc --namespace helm-deployment first-mychart --template "{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}")
+  echo http://$SERVICE_IP:80
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
